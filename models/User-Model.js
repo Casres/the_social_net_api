@@ -35,7 +35,6 @@ const UserSchema = new Schema(
   }
 );
 
-// creating virtual column called friendCount that will display number of friends
 UserSchema.virtual("friendCount").get(function () {
   return this.friends.length;
 });

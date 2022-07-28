@@ -1,7 +1,6 @@
 const { Thought, User } = require("../models");
 
 const thoughtController = {
-  // get all thoughts
   getAllThoughts(req, res) {
     Thought.find({})
       .select("-__v")
@@ -12,7 +11,6 @@ const thoughtController = {
       });
   },
 
-  // get one thought by id
   getThoughtById({ params }, res) {
     Thought.findOne({ _id: params.thoughtId })
       .populate({
@@ -59,7 +57,6 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // update a thought by id
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
       new: true,
@@ -80,7 +77,6 @@ const thoughtController = {
       .catch((err) => res.status(400).json(err));
   },
 
-  // remove thought from a user
   removeThought({ params }, res) {
     // deletes the document while laos returning its data
     Thought.findOneAndDelete({ _id: params.thoughtId })
@@ -107,7 +103,6 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // add reaction by updating an existing thought
   addReaction({ params, body }, res) {
     Thought.findByIdAndUpdate(
       { _id: params.thoughtId },
@@ -129,11 +124,9 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // remove reaction from a thought
   removeReaction({ params }, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
-      // remove specific reaction from the reactions array where the reactionId matches the value of params.reactionId passed in from the route
       { $pull: { reactions: { reactionId: params.reactionId } } },
       { new: true }
     )

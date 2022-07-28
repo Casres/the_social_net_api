@@ -1,7 +1,6 @@
 const { User } = require("../models");
 
 const userController = {
-  // READ all users; will serve as the callback function for the GET /api/users route
   getAllUsers(req, res) {
     User.find({})
       .populate([
@@ -23,7 +22,6 @@ const userController = {
       });
   },
 
-  // READ one user by id; will serve as the callback function for the GET /api/users/:id route
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
       .populate([
@@ -50,7 +48,6 @@ const userController = {
       });
   },
 
-  // CREATE a user; will serve as the callback function for the POST /api/users route
   createUser({ body }, res) {
     User.create(body)
       .then((dbUserData) => res.json(dbUserData))
@@ -73,7 +70,6 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
 
-  // DELETE a user by id; will serve as the callback function for the DELETE /api/users/:id
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
       .then((dbUserData) => {
@@ -86,7 +82,6 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
 
-  // add a new friend to a user's friend list
   addFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId },
@@ -103,7 +98,6 @@ const userController = {
       .catch((err) => res.json(err));
   },
 
-  // remove a friend from a user's friend list
   removeFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId },
